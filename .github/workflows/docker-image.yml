@@ -1,18 +1,30 @@
 name: Docker Image CI
-
+run-name: ${{ github.actor }} is update Docker's image 🐳
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
-
-  build:
-
+  deploy-on-Docker:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag node-chrome-headless:latest
+      - uses: actions/checkout@v3
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build the Backend Docker image
+        run: |
+          docker build -t node-chrome-headless .
+          docker tag node-chrome-headless cafeteru/node-chrome-headless:latest
+          docker push cafeteru/node-chrome-headless:latest
