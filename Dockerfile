@@ -10,12 +10,6 @@ RUN apt-get update && apt-get upgrade -y
 RUN apt-get install wget curl unzip -y
 RUN yarn global add npm
 
-# Configure chromedriver for Selenium
-RUN wget https://chromedriver.storage.googleapis.com/$chromedriverVersion/chromedriver_linux64.zip
-RUN unzip chromedriver_linux64.zip
-RUN mkdir /opt/selenium
-RUN mv chromedriver /opt/selenium
-
 # Install Chromium
 RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 RUN apt install ./google-chrome*.deb -y
