@@ -29,6 +29,6 @@ RUN sed -i 's/"$HERE\/chrome"/"$HERE\/chrome" \
 
 RUN useradd --create-home project
 WORKDIR /home/project/
-USER root
+USER project
 
 ENTRYPOINT bash
