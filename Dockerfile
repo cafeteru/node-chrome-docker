@@ -9,6 +9,7 @@ ARG chromedriverVersion=112.0.5615.49
 RUN apt-get update && apt-get upgrade -y
 RUN apt-get install wget curl unzip -y
 RUN yarn global add npm
+RUN npm i pnpm -g
 
 # Install Chromium
 RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
